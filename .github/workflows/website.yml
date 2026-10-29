@@ -1,0 +1,35 @@
+name: Update Cloudflare upload bundle
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['jane-website.zip', '.github/workflows/website.yml']
+permissions:
+  contents: write
+jobs:
+  website:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '24'
+      - name: Refresh installer and website checksums
+        run: |
+          node --input-type=module <<'JS'
+          import { readFile, writeFile } from 'node:fs/promises';
+          import { createHash } from 'node:crypto';
+          const release = JSON.parse(await readFile('release.json', 'utf8'));
+          const zip = await readFile('jane-website.zip');
+          if (zip.length > 5*1024*1024 || zip.readUInt32LE(0) !== 0x04034b50) throw new Error('Invalid static website archive');
+          const lines = release.assets.map(asset => asset.sha256 + '  ' + asset.name);
+          lines.push(createHash('sha256').update(zip).digest('hex') + '  jane-website.zip');
+          await writeFile('SHA256SUMS', lines.join('\n') + '\n');
+          JS
+      - name: Update public website download
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release upload v2.2.1 jane-website.zip SHA256SUMS --clobber
