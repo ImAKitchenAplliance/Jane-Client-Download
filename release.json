@@ -1,0 +1,34 @@
+{
+  "tag": "v2.2.1",
+  "version": "2.2.1",
+  "prerelease": true,
+  "private": false,
+  "repository": "ImAKitchenAplliance/Jane-Client-Download",
+  "url": "https://github.com/ImAKitchenAplliance/Jane-Client-Download/releases/tag/v2.2.1",
+  "assets": [
+    {
+      "name": "jane-client-2.2.1-amd64.deb",
+      "size": 102650660,
+      "sha256": "07d99ad1e663acc14964a29f59a905dc74b134453d22b699a238364ec76d0a7b",
+      "url": "https://github.com/ImAKitchenAplliance/Jane-Client-Download/releases/download/v2.2.1/jane-client-2.2.1-amd64.deb"
+    },
+    {
+      "name": "jane-client-2.2.1-x86_64.AppImage",
+      "size": 130072694,
+      "sha256": "7b88dd6ecd817c64ae116c6720c7224c2f7a1000b0fd877f75cf631d912630bd",
+      "url": "https://github.com/ImAKitchenAplliance/Jane-Client-Download/releases/download/v2.2.1/jane-client-2.2.1-x86_64.AppImage"
+    },
+    {
+      "name": "jane-client-2.2.1-windows-x64-portable.exe",
+      "size": 112025437,
+      "sha256": "a6b5077c104b61a8e1b05a9d4fe52e71d908466f79b6e60c76f85637ff9282d4",
+      "url": "https://github.com/ImAKitchenAplliance/Jane-Client-Download/releases/download/v2.2.1/jane-client-2.2.1-windows-x64-portable.exe"
+    },
+    {
+      "name": "jane-client-2.2.1-windows-x64-setup.exe",
+      "size": 122485035,
+      "sha256": "f023e77434eb3a1238890b434611d761797211487cf29c9bbacedd8f52de4e36",
+      "url": "https://github.com/ImAKitchenAplliance/Jane-Client-Download/releases/download/v2.2.1/jane-client-2.2.1-windows-x64-setup.exe"
+    }
+  ]
+}

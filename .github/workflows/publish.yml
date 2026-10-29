@@ -1,0 +1,30 @@
+name: Publish verified installers
+on:
+  workflow_dispatch:
+    inputs:
+      source_urls:
+        description: Temporary signed download URLs for the four already-built installers
+        required: true
+permissions:
+  contents: write
+jobs:
+  publish:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '24'
+      - name: Download and verify existing binaries
+        env:
+          SOURCE_URLS: ${{ inputs.source_urls }}
+        run: node scripts/publish-release.mjs
+      - name: Publish binaries and upload-ready website
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release upload v2.2.1 files/jane-client-2.2.1-amd64.deb files/jane-client-2.2.1-x86_64.AppImage files/jane-client-2.2.1-windows-x64-setup.exe files/jane-client-2.2.1-windows-x64-portable.exe files/SHA256SUMS jane-website.zip --clobber
+          gh release edit v2.2.1 --draft=false
